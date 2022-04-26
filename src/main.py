@@ -1,4 +1,7 @@
-from report import build_report, ABBREIVIATIONS
+from report import build_report
+
+ABBREIVIATIONS = 'abbreviations.txt'
+
 
 
 def print_report(file):
