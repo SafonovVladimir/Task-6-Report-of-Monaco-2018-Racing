@@ -36,10 +36,4 @@ def cli(file, desc, driver):
 
 
 if __name__ == '__main__':
-    # print_report('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat', None)
-    # print_report('D:\data', 'Daniel Ricciardo')
-    # print_report('D:\data', 'Lewis Hamilton')
-    # print(make_driver_team_dict('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat\\abbreviations.txt'))
-    # print(get_team_list('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat\\abbreviations.txt'))
-    # print(get_team_from_name('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat', 'Daniel Ricciardo'))
     cli()

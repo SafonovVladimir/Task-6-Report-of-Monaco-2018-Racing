@@ -9,7 +9,6 @@ def build_report(path, name, rev=False):
     start = WindowsPath(path + '\start.log')
     end = WindowsPath(path + '\end.log')
     add_path = WindowsPath(path + '\\abbreviations.txt')
-    # for i in read_file(abbreiviations):
     driver_name_dict = make_driver_name_dict(add_path)
     for k, v in driver_name_dict.items():
         if name == v:
@@ -30,4 +29,4 @@ def build_report(path, name, rev=False):
             t2 = datetime.strptime(make_driver_time_dict(add_path, end).get(key), FMT).time()
             lap_time[key] = get_lap_time(t1, t2)
             all_data_dict[key] = driver_name, team_name, lap_time[key]
-        return dict(sorted(all_data_dict.items(), reverse=rev, key=lambda item: item[1][2]))  # reverse=True,
+        return dict(sorted(all_data_dict.items(), reverse=rev, key=lambda item: item[1][2]))

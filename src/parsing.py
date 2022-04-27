@@ -1,7 +1,4 @@
-# from datetime import datetime
 from pathlib import WindowsPath
-
-# from convert_time import get_lap_time
 
 FMT = '%H:%M:%S.%f'
 
