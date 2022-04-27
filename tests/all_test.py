@@ -1,10 +1,11 @@
 from pathlib import Path
 from unittest import TestCase, main
 from datetime import datetime
-from tests import convert_to_milliseconds, get_lap_time
-from tests import print_report
-from tests import get_abb_list, get_time, get_driver_time, get_abb
-from tests import build_report
+
+# from src.parsing import get_abb_from_name
+from tests import get_abb_from_name, make_driver_time
+from tests import convert_to_milliseconds, get_lap_time, print_report, build_report
+from tests import get_abb_list, get_time, make_driver_time_dict, get_abb, make_driver_name_dict
 
 ABBREIVIATIONS = Path(__file__).parent.parent / 'tests/test_data/abbreviations.txt'
 END = Path(__file__).parent.parent / 'tests/test_data/end.log'
@@ -23,13 +24,25 @@ class TestCollection(TestCase):
         """Test abbreviations"""
         self.assertEqual(get_abb_list(ABBREIVIATIONS), ['DRR'])
 
+    def test_get_abb_from_name(self):
+        """Test abbreviations"""
+        self.assertEqual(get_abb_from_name('Daniel Ricciardo'), 'DRR')
+
     def test_get_time(self):
         """Test get_time"""
         self.assertEqual(get_time('DRR2018-05-24_12:14:12.054'), '12:14:12.054')
 
-    def test_get_driver_time(self):
+    def test_make_driver_time_dict(self):
         """Test get_driver_time"""
-        self.assertEqual(get_driver_time(ABBREIVIATIONS, START), {'DRR': '12:14:12.054'})
+        self.assertEqual(make_driver_time_dict(ABBREIVIATIONS, START), {'DRR': '12:14:12.054'})
+
+    def test_make_driver_time(self):
+        """Test get_driver_time"""
+        self.assertEqual(make_driver_time('DRR', START), {'DRR': '12:14:12.054'})
+
+    def test_make_driver_name_dict(self):
+        """Test get_driver_time"""
+        self.assertEqual(make_driver_name_dict(ABBREIVIATIONS), {'DRR': 'Daniel Ricciardo'})
 
     def test_convert_to_milliseconds(self):
         """Test convert_to_milliseconds"""
@@ -37,8 +50,8 @@ class TestCollection(TestCase):
 
     def test_get_lap_time(self):
         """Test get_lap_time"""
-        t1 = datetime.strptime(get_driver_time(ABBREIVIATIONS, START).get('DRR'), FMT).time()
-        t2 = datetime.strptime(get_driver_time(ABBREIVIATIONS, END).get('DRR'), FMT).time()
+        t1 = datetime.strptime(make_driver_time_dict(ABBREIVIATIONS, START).get('DRR'), FMT).time()
+        t2 = datetime.strptime(make_driver_time_dict(ABBREIVIATIONS, END).get('DRR'), FMT).time()
         self.assertEqual(get_lap_time(t1, t2), '1:12.013')
 
     def test_build_report(self):
