@@ -22,4 +22,4 @@ App print report that shows the top 15 racers and the rest after underline, for 
 The application has a command-line interface and you can to have a few parameters. 
 E.g.
 python report.py --files <folder_path> --asc | --desc  shows list of drivers and optional order (default order is asc)
-python report.py --files <folder_path> --driver “Sebastian Vettel”  shows statistic about driver 
+python report.py --files <folder_path> --driver â€œSebastian Vettelâ€  shows statistic about driver 
