@@ -1,38 +1,45 @@
-from src.parsing import *
-from datetime import datetime
-from src.convert_time import get_lap_time
-
-FMT = '%H:%M:%S.%f'
+import click
+from prettytable import PrettyTable
+from make_report import build_report
 
 
-def build_report(path, name):
-    lap_time = {}
-    all_data_dict = {}
-    start = WindowsPath(path + '\start.log')
-    end = WindowsPath(path + '\end.log')
-    abbreiviations = WindowsPath(path + '\\abbreviations.txt')
-    for i in read_file(abbreiviations):
-        driver_name_dict = make_driver_name_dict(abbreiviations)
-        for k, v in driver_name_dict.items():
-            if name == v:
-                key = get_abb_from_name(path, name)
-                driver_name = name
-                team_name = get_team_from_name(path, name)
-                t1 = datetime.strptime(make_driver_time_dict(abbreiviations, start).get(key), FMT).time()
-                t2 = datetime.strptime(make_driver_time_dict(abbreiviations, end).get(key), FMT).time()
-                lap_time[key] = get_lap_time(t1, t2)
-                all_data_dict[key] = driver_name, team_name, lap_time[key]
-                return dict(sorted(all_data_dict.items(), key=lambda item: item[1][2]))
+def print_report(path, name, rev):
+    count = 1
+    table = PrettyTable()
+    table.field_names = ["Number", "Driver name", "Team name", "Lap time"]
+    for key, value in build_report(path, name, rev).items():
+        if count < 16:
+            table.add_row([count, value[0], value[1], value[2]])
+            count += 1
+        elif count == 16:
+            table.add_row(["-" * 6, "-" * 17, "-" * 25, "-" * 8])
+            table.add_row([count, value[0], value[1], value[2]])
+            count += 1
         else:
-            # start = WindowsPath(text + '\start.log')
-            # end = WindowsPath(text + '\end.log')
-            # abbreiviations = WindowsPath(text + '\\abbreviations.txt')
-            for j in read_file(abbreiviations):
-                key = get_abb(j)
-                driver_name = get_driver_name(j)
-                team_name = get_team_name(j)
-                t1 = datetime.strptime(make_driver_time_dict(abbreiviations, start).get(key), FMT).time()
-                t2 = datetime.strptime(make_driver_time_dict(abbreiviations, end).get(key), FMT).time()
-                lap_time[key] = get_lap_time(t1, t2)
-                all_data_dict[key] = driver_name, team_name, lap_time[key]
-        return dict(sorted(all_data_dict.items(), key=lambda item: item[1][2])) #reverse=True,
+            table.add_row([count, value[0], value[1], value[2]])
+            count += 1
+    print(table)
+
+
+@click.command(context_settings={"ignore_unknown_options": True})
+@click.option('--file', nargs=1, help='Enter the PATH to data files')
+@click.option('--driver', nargs=1, default=None, help='Enter the PATH to data files')
+@click.option('--desc', is_flag=True)
+def cli(file, desc, driver):
+    if driver:
+        print_report(file, driver, desc)
+    else:
+        if desc:
+            print_report(file, driver, desc)
+        else:
+            print_report(file, driver, desc)
+
+
+if __name__ == '__main__':
+    # print_report('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat', None)
+    # print_report('D:\data', 'Daniel Ricciardo')
+    # print_report('D:\data', 'Lewis Hamilton')
+    # print(make_driver_team_dict('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat\\abbreviations.txt'))
+    # print(get_team_list('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat\\abbreviations.txt'))
+    # print(get_team_from_name('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat', 'Daniel Ricciardo'))
+    cli()

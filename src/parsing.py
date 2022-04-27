@@ -1,8 +1,9 @@
 # from datetime import datetime
 from pathlib import WindowsPath
 
+# from convert_time import get_lap_time
 
-# from src.convert_time import get_lap_time
+FMT = '%H:%M:%S.%f'
 
 
 def get_time(text):
@@ -14,7 +15,7 @@ def get_abb(text):
 
 
 def get_abb_from_name(path, name):
-    for k, v in make_driver_name_dict(WindowsPath(path + '\\abbreviations.txt')).items():
+    for k, v in make_driver_name_dict(WindowsPath(path)).items():
         if v == name:
             return str(k)
 
@@ -28,7 +29,7 @@ def get_team_name(text):
 
 
 def get_team_from_name(path, name):
-    for k, v in make_driver_team_dict(WindowsPath(path + '\\abbreviations.txt')).items():
+    for k, v in make_driver_team_dict(WindowsPath(path)).items():
         if k == name:
             return str(v)
 
