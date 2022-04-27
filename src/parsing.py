@@ -1,6 +1,6 @@
-from pathlib import Path
+from pathlib import Path, WindowsPath
 
-ABBREIVIATIONS = Path(__file__).parent.parent / 'data/abbreviations.txt'
+# ABBREIVIATIONS = Path(__file__).parent.parent / 'data/abbreviations.txt'
 
 
 def get_time(text):
@@ -11,8 +11,8 @@ def get_abb(text):
     return text.split("_")[0]
 
 
-def get_abb_from_name(name):
-    for k, v in make_driver_name_dict(ABBREIVIATIONS).items():
+def get_abb_from_name(path, name):
+    for k, v in make_driver_name_dict(WindowsPath(path + '\\abbreviations.txt')).items():
         if v == name:
             return str(k)
 
@@ -43,7 +43,7 @@ def read_file(file):
 def make_driver_time(abb, time):
     start_time = {}
     for i in read_file(time):
-        if abb in get_abb_list(ABBREIVIATIONS):
+        if abb in get_abb_list(WindowsPath(abb + '\\abbreviations.txt')):
             start_time[i[:3]] = get_time(i)
     return start_time
 

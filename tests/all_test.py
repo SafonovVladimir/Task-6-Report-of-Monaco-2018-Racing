@@ -2,7 +2,6 @@ from pathlib import Path
 from unittest import TestCase, main
 from datetime import datetime
 
-# from src.parsing import get_abb_from_name
 from tests import get_abb_from_name, make_driver_time
 from tests import convert_to_milliseconds, get_lap_time, print_report, build_report
 from tests import get_abb_list, get_time, make_driver_time_dict, get_abb, make_driver_name_dict

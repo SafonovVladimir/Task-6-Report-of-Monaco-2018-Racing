@@ -1,14 +1,13 @@
-from pathlib import WindowsPath
 import click
 from prettytable import PrettyTable
 from report import build_report#, ABBREIVIATIONS, START, END
 
 
-def print_report(file):
+def print_report(path, name):
     count = 1
     table = PrettyTable()
     table.field_names = ["Number", "Driver name", "Team name", "Lap time"]
-    for key, value in build_report(file).items():
+    for key, value in build_report(path, name).items():
         if count < 16:
             table.add_row([count, value[0], value[1], value[2]])
             count += 1
@@ -25,15 +24,16 @@ def print_report(file):
 @click.command(context_settings={"ignore_unknown_options": True})
 @click.option('--file', nargs=1, help='Enter the PATH to data files')
 @click.option('--driver', nargs=1, help='Enter the PATH to data files')
-def make_cli(file, driver):
+# @click.option('--asc', nargs=0, help='Enter the PATH to data files')
+def make_cli(file, driver=None):
     if driver:
-        print_report(driver)
+        print_report(driver, file)
     else:
-        print_report(file)
+        print_report(driver, file)
 
 
 if __name__ == '__main__':
-    print_report('D:\data')
+    # print_report('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat')
     # print_report('Daniel Ricciardo')
-    # print_report('Romain Grosjean')
+    print_report('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat', 'Daniel Ricciardo')
     # make_cli()
