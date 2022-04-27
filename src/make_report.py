@@ -3,12 +3,12 @@ from datetime import datetime
 from convert_time import get_lap_time
 
 
-def build_report(path, name, rev=False):
+def build_report(path, name, rev):
     lap_time = {}
     all_data_dict = {}
-    start = WindowsPath(path + '\start.log')
-    end = WindowsPath(path + '\end.log')
-    add_path = WindowsPath(path + '\\abbreviations.txt')
+    start = WindowsPath(path + '/start.log')
+    end = WindowsPath(path + '/end.log')
+    add_path = WindowsPath(path + '/abbreviations.txt')
     driver_name_dict = make_driver_name_dict(add_path)
     for k, v in driver_name_dict.items():
         if name == v:

@@ -3,6 +3,14 @@ from pathlib import WindowsPath
 FMT = '%H:%M:%S.%f'
 
 
+def read_file(file):
+    try:
+        with open(file, 'r') as f:
+            return f.readlines()
+    except OSError:
+        raise OSError(f'{file} does not exist.')
+
+
 def get_time(text):
     return text.split("_")[1].split("\n")[0]
 
@@ -12,9 +20,7 @@ def get_abb(text):
 
 
 def get_abb_from_name(path, name):
-    for k, v in make_driver_name_dict(WindowsPath(path)).items():
-        if v == name:
-            return str(k)
+    return ''.join(k for k, v in make_driver_name_dict(WindowsPath(path)).items() if v == name)
 
 
 def get_driver_name(text):
@@ -26,60 +32,24 @@ def get_team_name(text):
 
 
 def get_team_from_name(path, name):
-    for k, v in make_driver_team_dict(WindowsPath(path)).items():
-        if k == name:
-            return str(v)
+    return ''.join(v for k, v in make_driver_team_dict(WindowsPath(path)).items() if k == name)
 
 
 def get_team_list(path):
-    team_list = []
-    for i in read_file(path):
-        team_list.append(get_team_name(i))
-    return team_list
+    return [get_team_name(i) for i in read_file(path)]
 
 
 def get_abb_list(abbreviations):
-    abb_list = []
-    for i in read_file(abbreviations):
-        abb_list.append(get_abb(i))
-    return abb_list
-
-
-def read_file(file):
-    try:
-        with open(file, 'r') as f:
-            return f.readlines()
-    except OSError:
-        raise OSError(f'{file} does not exist.')
-
-
-# def make_driver_time(abb, time):
-#     start_time = {}
-#     for i in read_file(time):
-#         if abb in get_abb_list(WindowsPath(abb + '\\abbreviations.txt')):
-#             start_time[i[:3]] = get_time(i)
-#     return start_time
+    return [get_abb(i) for i in read_file(abbreviations)]
 
 
 def make_driver_time_dict(abb, time):
-    start_time = {}
-    for i in read_file(time):
-        if i[:3] in get_abb_list(abb):
-            start_time[i[:3]] = get_time(i)
-    return start_time
+    return {i[:3]: get_time(i) for i in read_file(time) if i[:3] in get_abb_list(abb)}
 
 
 def make_driver_name_dict(path):
-    name_dict = {}
-    for i in read_file(path):
-        if get_abb(i) in get_abb_list(path):
-            name_dict[get_abb(i)] = get_driver_name(i)
-    return name_dict
+    return {get_abb(i): get_driver_name(i) for i in read_file(path) if get_abb(i) in get_abb_list(path)}
 
 
 def make_driver_team_dict(path):
-    team_dict = {}
-    for i in read_file(path):
-        if get_abb(i) in get_abb_list(path):
-            team_dict[get_driver_name(i)] = get_team_name(i)
-    return team_dict
+    return {get_driver_name(i): get_team_name(i) for i in read_file(path) if get_abb(i) in get_abb_list(path)}

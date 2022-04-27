@@ -1,13 +1,12 @@
-# from pathlib import Path
 from unittest import TestCase, main
 from datetime import datetime
 
-from src.parsing import get_team_list
-from tests import get_abb_from_name#, make_driver_time
+from tests import get_team_list
+from tests import get_abb_from_name
 from tests import convert_to_milliseconds, get_lap_time, print_report, build_report
 from tests import get_abb_list, get_time, make_driver_time_dict, get_abb, make_driver_name_dict
 
-ABBREIVIATIONS = 'D:\PythonProjects\Task 6 Report of Monaco 2018 Racing/tests/test_data'
+ABBREIVIATIONS = 'D:\PythonProjects\Task 6 Report of Monaco 2018 Racing/tests/test_data/'
 END = 'D:\PythonProjects\Task 6 Report of Monaco 2018 Racing/tests/test_data/end.log'
 START = 'D:\PythonProjects\Task 6 Report of Monaco 2018 Racing/tests/test_data/start.log'
 NAME = 'Daniel Ricciardo'
@@ -31,7 +30,7 @@ class TestCollection(TestCase):
 
     def test_get_abb_from_name(self):
         """Test abbreviations"""
-        self.assertEqual(get_abb_from_name(ABBREIVIATIONS, NAME), 'DRR')
+        self.assertEqual(get_abb_from_name(ABBREIVIATIONS + '\\abbreviations.txt', NAME), 'DRR')
 
     def test_get_time(self):
         """Test get_time"""
@@ -63,16 +62,16 @@ class TestCollection(TestCase):
 
     def test_build_report(self):
         """Test build_report"""
-        self.assertEqual(build_report(ABBREIVIATIONS, NAME),
+        self.assertEqual(build_report(ABBREIVIATIONS, NAME, 1),
                          {'DRR': ('Daniel Ricciardo', 'RED BULL RACING TAG HEUER', '1:12.013')})
 
     def test_print_report_name(self):
         """Test print_report"""
-        self.assertEqual(print_report(ABBREIVIATIONS, NAME), None)
+        self.assertEqual(print_report(ABBREIVIATIONS, NAME, 1), None)
 
     def test_print_report_without_name(self):
         """Test print_report"""
-        self.assertEqual(print_report(ABBREIVIATIONS, None), None)
+        self.assertEqual(print_report(ABBREIVIATIONS, None, 1), None)
 
 
 if __name__ == '__main__':
