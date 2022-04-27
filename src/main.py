@@ -1,8 +1,7 @@
 from pathlib import WindowsPath
-
 import click
 from prettytable import PrettyTable
-from report import build_report, ABBREIVIATIONS
+from report import build_report#, ABBREIVIATIONS, START, END
 
 
 def print_report(file):
@@ -30,14 +29,11 @@ def make_cli(file, driver):
     if driver:
         print_report(driver)
     else:
-        # START = WindowsPath(file + 'start.txt')
-        print_report(WindowsPath(file + 'abbreviations.txt'))
+        print_report(file)
 
 
 if __name__ == '__main__':
-    # print_report(ABBREIVIATIONS)
-    print_report('Nico Hulkenberg')
-    # print(type(ABBREIVIATIONS))
-    # print(get_abb_list(ABBREIVIATIONS))
+    print_report('D:\data')
+    # print_report('Daniel Ricciardo')
+    # print_report('Romain Grosjean')
     # make_cli()
-    # print(build_report_by_driver_name('Sebastian Vettel'))
