@@ -1,8 +1,5 @@
 from prettytable import PrettyTable
-
-from report import build_report
-
-ABBREIVIATIONS = 'abbreviations.txt'
+from src.report import build_report, ABBREIVIATIONS
 
 
 def print_report(file):
@@ -22,5 +19,5 @@ def print_report(file):
             count += 1
     print(table)
 
-
-print_report(ABBREIVIATIONS)
+if __name__ == '__main__':
+    print_report(ABBREIVIATIONS)

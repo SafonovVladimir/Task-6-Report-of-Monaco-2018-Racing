@@ -1,9 +1,11 @@
-from parsing import read_file, get_driver_time
+from pathlib import Path
+from src.parsing import read_file, get_driver_time
 from datetime import datetime
-from convert_time import get_lap_time
+from src.convert_time import get_lap_time
 
-END = 'end.log'
-START = 'start.log'
+ABBREIVIATIONS = Path(__file__).parent.parent / 'data/abbreviations.txt'
+END = Path(__file__).parent.parent / 'data/end.log'
+START = Path(__file__).parent.parent / 'data/start.log'
 FMT = '%H:%M:%S.%f'
 
 
@@ -18,6 +20,5 @@ def build_report(file):
         t1 = datetime.strptime(get_driver_time(file, START).get(abb), FMT).time()
         t2 = datetime.strptime(get_driver_time(file, END).get(abb), FMT).time()
         lap_time[abb] = get_lap_time(t1, t2)
-        if key not in all_data_dict:
-            all_data_dict[key] = driver_name, team_name, lap_time[abb]
+        all_data_dict[key] = driver_name, team_name, lap_time[abb]
     return dict(sorted(all_data_dict.items(), key=lambda item: item[1][2]))
