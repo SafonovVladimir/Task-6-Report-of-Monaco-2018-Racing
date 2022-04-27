@@ -22,9 +22,9 @@ def print_report(path, name, rev):
 
 
 @click.command(context_settings={"ignore_unknown_options": True})
-@click.option('--file', nargs=1, help='Enter the PATH to data files')
-@click.option('--driver', nargs=1, default=None, help='Enter the PATH to data files')
-@click.option('--desc', is_flag=True)
+@click.option('--file', nargs=1, help='Enter the PATH to Folder with data files')
+@click.option('--driver', nargs=1, default=None, help='Enter the drivers name to show data')
+@click.option('--desc', is_flag=True, help='Show revers result')
 def cli(file, desc, driver):
     if driver:
         print_report(file, driver, desc)

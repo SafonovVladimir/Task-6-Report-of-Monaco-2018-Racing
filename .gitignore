@@ -1,1 +1,12 @@
 # created by virtualenv automatically
+build/
+dist/
+*.egg-info/
+*.egg
+__pycache__/
+*.so
+*~
+
+# due to using tox and pytest
+.tox
+.cache
