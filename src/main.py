@@ -1,6 +1,9 @@
 import click
 from prettytable import PrettyTable
-from report import build_report#, ABBREIVIATIONS, START, END
+
+from src.parsing import make_driver_name_dict, make_driver_team_dict, get_team_list, get_abb_from_name, \
+    get_team_from_name
+from src.report import build_report
 
 
 def print_report(path, name):
@@ -27,13 +30,17 @@ def print_report(path, name):
 # @click.option('--asc', nargs=0, help='Enter the PATH to data files')
 def make_cli(file, driver=None):
     if driver:
-        print_report(driver, file)
+        print_report(file, driver)
     else:
-        print_report(driver, file)
+        print_report(file, driver)
 
 
 if __name__ == '__main__':
-    # print_report('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat')
-    # print_report('Daniel Ricciardo')
-    print_report('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat', 'Daniel Ricciardo')
+    # print_report('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat', None)
+    # print_report('D:\data', 'Daniel Ricciardo')
+    # print_report('D:\data', 'Lewis Hamilton')
+    # print(make_driver_team_dict('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat\\abbreviations.txt'))
+    # print(get_team_list('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat\\abbreviations.txt'))
+    # print(get_team_from_name('D:\PythonProjects\Task 6 Report of Monaco 2018 Racing\dat', 'Daniel Ricciardo'))
     # make_cli()
+

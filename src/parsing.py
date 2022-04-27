@@ -1,6 +1,8 @@
-from pathlib import Path, WindowsPath
+# from datetime import datetime
+from pathlib import WindowsPath
 
-# ABBREIVIATIONS = Path(__file__).parent.parent / 'data/abbreviations.txt'
+
+# from src.convert_time import get_lap_time
 
 
 def get_time(text):
@@ -25,6 +27,19 @@ def get_team_name(text):
     return text.split("_")[2].split("\n")[0]
 
 
+def get_team_from_name(path, name):
+    for k, v in make_driver_team_dict(WindowsPath(path + '\\abbreviations.txt')).items():
+        if k == name:
+            return str(v)
+
+
+def get_team_list(path):
+    team_list = []
+    for i in read_file(path):
+        team_list.append(get_team_name(i))
+    return team_list
+
+
 def get_abb_list(abbreviations):
     abb_list = []
     for i in read_file(abbreviations):
@@ -40,12 +55,12 @@ def read_file(file):
         raise OSError(f'{file} does not exist.')
 
 
-def make_driver_time(abb, time):
-    start_time = {}
-    for i in read_file(time):
-        if abb in get_abb_list(WindowsPath(abb + '\\abbreviations.txt')):
-            start_time[i[:3]] = get_time(i)
-    return start_time
+# def make_driver_time(abb, time):
+#     start_time = {}
+#     for i in read_file(time):
+#         if abb in get_abb_list(WindowsPath(abb + '\\abbreviations.txt')):
+#             start_time[i[:3]] = get_time(i)
+#     return start_time
 
 
 def make_driver_time_dict(abb, time):
@@ -56,9 +71,17 @@ def make_driver_time_dict(abb, time):
     return start_time
 
 
-def make_driver_name_dict(abb):
+def make_driver_name_dict(path):
     name_dict = {}
-    for i in read_file(abb):
-        if i[:3] in get_abb_list(abb):
-            name_dict[i[:3]] = get_driver_name(i)
+    for i in read_file(path):
+        if get_abb(i) in get_abb_list(path):
+            name_dict[get_abb(i)] = get_driver_name(i)
     return name_dict
+
+
+def make_driver_team_dict(path):
+    team_dict = {}
+    for i in read_file(path):
+        if get_abb(i) in get_abb_list(path):
+            team_dict[get_driver_name(i)] = get_team_name(i)
+    return team_dict
