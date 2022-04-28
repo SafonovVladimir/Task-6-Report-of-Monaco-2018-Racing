@@ -1,6 +1,6 @@
 import click
 from prettytable import PrettyTable
-from make_report import build_report
+from src.make_report import build_report
 
 
 def print_report(path, name, rev):

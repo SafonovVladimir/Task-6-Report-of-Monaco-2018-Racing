@@ -1,6 +1,5 @@
+from datetime import datetime
 from pathlib import WindowsPath
-
-FMT = '%H:%M:%S.%f'
 
 
 def read_file(file):
@@ -53,3 +52,7 @@ def make_driver_name_dict(path):
 
 def make_driver_team_dict(path):
     return {get_driver_name(i): get_team_name(i) for i in read_file(path) if get_abb(i) in get_abb_list(path)}
+
+
+def get_driver_time(path, time, key):
+    return datetime.strptime(make_driver_time_dict(path, time).get(key), '%H:%M:%S.%f').time()

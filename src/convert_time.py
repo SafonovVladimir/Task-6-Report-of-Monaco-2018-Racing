@@ -1,5 +1,7 @@
 import datetime
 
+FMT = '%H:%M:%S.%f'
+
 
 def convert_to_milliseconds(time):
     return (time.hour * 60 + time.minute * 60 + time.second) * 1000 + time.microsecond // 1000
