@@ -1,5 +1,5 @@
-from src.parsing import *
-from src.convert_time import get_lap_time
+from parsing import *
+from convert_time import get_lap_time
 
 all_data_dict = {}
 
